@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Literal, Dict
+from typing import Literal, Dict, Any
 import yaml
 
 
@@ -19,7 +19,7 @@ class Template:
 class On(Template):
     Triggers = Literal['push', 'pull_request']
 
-    def __init__(self, on: Dict[Triggers, list[str]]) -> None:
+    def __init__(self, on: Dict[Triggers, Dict[Triggers, Any]]) -> None:
         self.data = on
 
 
