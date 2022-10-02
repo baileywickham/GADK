@@ -10,7 +10,7 @@ class Template:
 
     def to_yaml(self):
         data = self.build()
-        return yaml.dump(data)
+        return yaml.dump(data, sort_keys=False)
 
     def build(self) -> Dict:
         return self.data
