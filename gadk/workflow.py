@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from enum import Enum
 from typing import Literal, Dict, Any
 import yaml
@@ -23,9 +25,30 @@ class On(Template):
         self.data = on
 
 
+class Run(Template):
+    def __init__(self, name: str, cmd):
+        self.name = name
+        self.cmd = cmd
+
+    def build(self) -> Dict:
+        return {'name': self.name, 'cmd': self.cmd}
+
+
+class Use(Template):
+    def __init__(self, name: str, uses: str):
+        self.name = name
+        self.uses = uses
+
+    def build(self) -> Dict:
+        return {'name': self.name, 'uses': self.uses}
+
+
 class Step(Template):
-    def __init__(self, data: Dict[str, str]):
+    def __init__(self, data: Run | Use):
         self.data = data
+
+    def build(self) -> Dict:
+        return self.data.build()
 
 
 class Job(Template):
@@ -53,3 +76,8 @@ class Workflow(Template):
         for job in self.jobs:
             jobs.update(job.build())
         return {'name': self.name, 'on': on, 'jobs': jobs}
+
+
+class Workflows(Template):
+    def __init__(self, workflows):
+        self.workflows = workflows
