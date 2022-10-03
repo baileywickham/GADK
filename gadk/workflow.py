@@ -1,6 +1,4 @@
 from __future__ import annotations
-
-from enum import Enum
 from typing import Literal, Dict, Any
 import yaml
 
@@ -31,7 +29,7 @@ class Run(Template):
         self.cmd = cmd
 
     def build(self) -> Dict:
-        return {'name': self.name, 'cmd': self.cmd}
+        return {'name': self.name, 'run': self.cmd}
 
 
 class Use(Template):
