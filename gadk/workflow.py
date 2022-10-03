@@ -24,25 +24,33 @@ class On(Template):
 
 
 class Run(Template):
-    def __init__(self, name: str, cmd):
+    def __init__(self, run: str, name: str = None, ):
         self.name = name
-        self.cmd = cmd
+        self.run = run
 
     def build(self) -> Dict:
-        return {'name': self.name, 'run': self.cmd}
+        d = {}
+        if self.name is not None:
+            d['name'] = self.name
+        d['run'] = self.run
+        return d
 
 
-class Use(Template):
-    def __init__(self, name: str, uses: str):
+class Uses(Template):
+    def __init__(self, uses: str, name: str = None):
         self.name = name
         self.uses = uses
 
     def build(self) -> Dict:
-        return {'name': self.name, 'uses': self.uses}
+        d = {}
+        if self.name is not None:
+            d['name'] = self.name
+        d['uses'] = self.uses
+        return d
 
 
 class Step(Template):
-    def __init__(self, data: Run | Use):
+    def __init__(self, data: Run | Uses):
         self.data = data
 
     def build(self) -> Dict:
